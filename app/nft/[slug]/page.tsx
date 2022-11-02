@@ -1,7 +1,7 @@
 import { sanity, urlFor } from "../../../util/sanity";
 
 // Get collection from sanity where the url param equals the slug
-const getCollection = async (slug: String) => {
+const getCollection = async (slug: string) => {
   console.log(slug);
   const query = `*[_type == "collection" && slug.current == "${slug}"]{
       title,
