@@ -13,7 +13,7 @@ const getCollection = async (slug: String) => {
   return collection[0];
 };
 
-async function NFTPage({ params }) {
+async function NFTPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const collection = await getCollection(slug);
   console.log(collection);
