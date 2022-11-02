@@ -1,4 +1,4 @@
-import sanity from "../util/sanity";
+import { sanity } from "../util/sanity";
 import Link from "next/link";
 
 function asyncComponent<T, R>(fn: (arg: T) => Promise<R>): (arg: T) => R {
