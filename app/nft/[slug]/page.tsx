@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import Mint from "../../../components/Mint";
 import { sanity, urlFor } from "../../../util/sanity";
 
@@ -17,7 +18,10 @@ const getCollection = async (slug: string) => {
 async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const collection = await getCollection(slug);
-  console.log(collection);
+
+  if (!collection) {
+    notFound();
+  }
 
   return (
     <section className="flex flex-col">
