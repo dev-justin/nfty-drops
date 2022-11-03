@@ -13,7 +13,7 @@ const getCollection = async (slug: string) => {
   return collection[0];
 };
 
-async function NFTPage({ params }: { params: { slug: string } }) {
+async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const collection = await getCollection(slug);
   console.log(collection);
@@ -32,4 +32,4 @@ async function NFTPage({ params }: { params: { slug: string } }) {
   );
 }
 
-export default NFTPage;
+export default Page;
