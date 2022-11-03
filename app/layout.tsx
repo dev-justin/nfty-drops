@@ -25,7 +25,9 @@ export default function RootLayout({
         </head>
         <body className="bg-gray-900 min-h-screen text-white flex flex-col">
           <Header />
-          <main className="grow max-w-7xl mx-auto py-12">{children}</main>
+          <main className="grow max-w-7xl mx-auto py-12 w-full">
+            {children}
+          </main>
           <Footer />
         </body>
       </html>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { BsArrowRight } from "react-icons/bs";
 import { sanity } from "../util/sanity";
 
@@ -43,21 +44,21 @@ const Hero = asyncComponent(async () => {
       </div>
       <div className="flex-1 flex justify-center items-center">
         <div className="flex-1 flex justify-center items-center">
-          <img
+          <Image
             src="/assets/images/FeaturedA3.avif"
             width={200}
             height={200}
             alt="Image showing artwork"
             className="object-cover aspect-[3/5] object-center rounded-lg shadow-md scale-75 opacity-70 blur-sm"
           />
-          <img
+          <Image
             src="/assets/images/FeaturedA1.avif"
             width={200}
             height={200}
             alt="Image showing artwork"
             className="object-cover aspect-[3/5] object-center rounded-lg shadow-md"
           />
-          <img
+          <Image
             src="/assets/images/FeaturedA2.avif"
             width={200}
             height={200}
