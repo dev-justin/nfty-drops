@@ -25,7 +25,7 @@ async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <section className="flex flex-col">
-      <div className="relative h-[200px] rounded-xl overflow-hidden border-4 border-white/10">
+      {/* <div className="relative h-[200px] rounded-xl overflow-hidden border-4 border-white/10">
         <Image
           src={urlFor(collection.headerImage).url()}
           alt={collection.title}
@@ -37,11 +37,12 @@ async function Page({ params }: { params: { slug: string } }) {
             {collection.title}
           </h1>
         </div>
-      </div>
+      </div> */}
       <div>
         <Mint
           nftImage={urlFor(collection.nftImage).url()}
           nftContract={collection.smartContractAddress}
+          nftTitle={collection.title}
         />
       </div>
     </section>
