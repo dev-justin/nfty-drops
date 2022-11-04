@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 import { BigNumber } from "ethers";
 import { useSpring, animated } from "react-spring";
 
-const calc = (x, y) => [
+const calc = (x: number, y: number) => [
   -(y - window.innerHeight / 2) / 20,
   (x - window.innerWidth / 2) / 20,
   1.1,
 ];
-const trans = (x, y, s) =>
+const trans = (x: number, y: number, s: number) =>
   `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`;
 
 function Mint({
