@@ -27,6 +27,7 @@ function MobileNavLinks({ collections }: { collections: collection[] }) {
                 <Link
                   href={`/nft/${collection.slug.current}`}
                   className="text-white hover:text-white/90 transition-all duration-300 ease-out"
+                  onClick={() => setIsOpen(false)}
                 >
                   {collection.title}
                 </Link>
