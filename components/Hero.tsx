@@ -18,7 +18,6 @@ const getCollections = async () => {
 
 const Hero = asyncComponent(async () => {
   const collections = await getCollections();
-  console.log(collections);
   return (
     <div className="flex py-12 gap-12 px-8 flex-col-reverse">
       <div className="flex flex-col items-center gap-8 flex-1">

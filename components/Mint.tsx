@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useContract } from "@thirdweb-dev/react";
 import { useEffect, useState } from "react";
-import { BigNumber } from "ethers";
 import { useSpring, animated } from "react-spring";
+import { useAddress } from "@thirdweb-dev/react";
 
 const calc = (x: number, y: number) => [
   -(y - window.innerHeight / 2) / 20,
@@ -27,24 +27,55 @@ function Mint({
     xys: [0, 0, 1],
     config: { mass: 5, tension: 350, friction: 40 },
   }));
-  const { contract } = useContract(nftContract);
-  console.log(contract?.metadata);
 
-  const [claimable, setClaimable] = useState<number>();
+  const address = useAddress();
+  const { contract } = useContract(nftContract, "nft-drop");
+
+  const [totalSupply, setTotalSupply] = useState<number>();
   const [claimed, setClaimed] = useState<number>();
+  const [price, setPrice] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
 
-  // useEffect(() => {
-  //   if (!contract) return;
-  //   const getNFTCount = async () => {
-  //     const claimedNFTCount = await contract.totalClaimedSupply();
-  //     const unclaimedNFTCount = await contract.totalUnclaimedSupply();
-  //     setClaimed(BigNumber.from(claimedNFTCount).toNumber());
-  //     setClaimable(BigNumber.from(unclaimedNFTCount).toNumber() + claimed);
-  //   };
-  //   getNFTCount();
-  //   setLoading(false);
-  // }, [contract]);
+  const getSupply = async () => {
+    await Promise.all([
+      contract?.totalSupply(),
+      contract?.totalClaimedSupply(),
+      contract?.claimConditions.getAll(),
+    ]).then((values) => {
+      setTotalSupply(Number(values[0]));
+      setClaimed(Number(values[1]));
+      setPrice(values[2]?.[0].currencyMetadata.displayValue);
+      setLoading(false);
+    });
+  };
+  useEffect(() => {
+    if (contract) {
+      getSupply();
+    }
+  }, [contract]);
+
+  const mintNft = async () => {
+    setLoading(true);
+    if (!address || !contract) return;
+    const quantity = 1;
+    contract.interceptor.overrideNextTransaction(() => ({
+      gasLimit: 3000000,
+    }));
+    contract
+      .claimTo(address, quantity)
+      .then(async (tx) => {
+        const receipt = tx[0].receipt; // the transaction receipt
+        const claimedTokenId = tx[0].id; // the id of the NFT claimed
+        const claimedNFT = await tx[0].data(); // (optional) get the claimed NFT metadata
+        console.log(claimedNFT);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     <div className="flex flex-col justify-center items-center pt-12">
@@ -54,40 +85,43 @@ function Mint({
         style={{ transform: props.xys.to(trans) }}
         className="flex flex-col justify-center items-center"
       >
-        <div className="flex flex-col justify-center items-center shadow-lg bg-gradient-to-r from-blue-400 to-green-300 p-1 hover:shadow-xl hover:shadow-blue-400 transition-shadow duration-500 ">
-          <div className="relative w-[600px] h-[400px]">
-            <div className="relative z-10 flex justify-end flex-col items-end h-full">
-              <div className="bg-white/20 backdrop-blur-sm w-full text-gray-800">
-                <div className="flex justify-center items-center py-8 px-4 gap-8 flex-col">
-                  <h3 className="text-3xl font-bold uppercase inline-flex">
-                    {nftTitle}
-                  </h3>
-                  <button className="text-gray-900 font-bold px-6 py-2 rounded-full bg-gradient-to-r from-blue-400 to-green-300 shadow-lg hover:opacity-70 transition duration-300 ease-out ">
-                    Mint
-                  </button>
-                </div>
-              </div>
-            </div>
+        <div className="flex flex-col justify-center items-center bg-gradient-to-r from-blue-400 to-green-300 p-1 shadow-xl shadow-blue-400 transition-shadow duration-500 ">
+          <div className="relative w-[400px] h-[500px]">
             <Image
               src={nftImage}
               fill={true}
               alt="NFT Display Image"
               className=" object-cover"
             />
+            <div className="relative z-10 flex justify-end flex-col items-end h-full group">
+              <div className="bg-gray-800/80 backdrop-blur-sm w-full group-hover:bg-gray-800/100 transition duration-300">
+                <div className="flex justify-center items-center py-8 px-4 gap-4 flex-col">
+                  <h3 className="text-3xl font-bold uppercase inline-flex">
+                    {nftTitle}
+                  </h3>
+                  {loading && (
+                    <div className="h-12 w-12 relative">
+                      <Image
+                        src="/assets/three-dots.svg"
+                        alt="Loading indicator"
+                        fill={true}
+                      />
+                    </div>
+                  )}
+                  {!loading && <p>{`Claimed: ${claimed}/${totalSupply}`}</p>}
+                  <button
+                    className="text-gray-900 font-bold px-6 py-2 rounded-full bg-gradient-to-r from-blue-400 to-green-300 shadow-lg hover:opacity-70 transition duration-300 ease-out w-full disabled:opacity-30"
+                    disabled={loading || address === undefined}
+                    onClick={mintNft}
+                  >
+                    {(address === undefined && "Wallet Not Connected") ||
+                      (!loading && `Mint for ${price} ETH`) ||
+                      "Loading..."}
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-          {/* <h3 className="text-2xl font-bold uppercase inline-flex">
-            {nftTitle}
-          </h3> */}
-          {/* {!loading && (
-          <div>
-            <p>
-              Supply: {claimed}/{claimable}
-            </p>
-          </div>
-        )} */}
-          {/* <button className="text-gray-900 font-bold px-6 py-2 rounded-full bg-gradient-to-r from-blue-400 to-green-300 shadow-lg hover:opacity-70 transition duration-300 ease-out w-full">
-            Mint
-          </button> */}
         </div>
       </animated.div>
     </div>
