@@ -6,7 +6,7 @@ import NavConnect from "./NavConnect";
 function Header() {
   return (
     <header className="border-b border-white/10">
-      <div className="max-w-7xl mx-auto p-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto p-4 flex items-center justify-between md:px-8">
         <div>
           <Link
             href="/"

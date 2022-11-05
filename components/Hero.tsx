@@ -48,6 +48,7 @@ const Hero = asyncComponent(async () => {
               src="/assets/images/FeaturedA3.avif"
               fill={true}
               alt="Image showing artwork"
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover aspect-[3/5] object-center rounded-lg shadow-md scale-75 opacity-70 blur-sm"
             />
           </div>
@@ -55,6 +56,7 @@ const Hero = asyncComponent(async () => {
             <Image
               src="/assets/images/FeaturedA1.avif"
               fill={true}
+              sizes="(max-width: 768px) 100vw, 50vw"
               alt="Image showing artwork"
               className="object-cover aspect-[3/5] object-center rounded-lg shadow-md"
             />
@@ -64,6 +66,7 @@ const Hero = asyncComponent(async () => {
               src="/assets/images/FeaturedA2.avif"
               fill={true}
               alt="Image showing artwork"
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover aspect-[3/5] object-center rounded-lg shadow-md scale-75 opacity-70 blur-sm"
             />
           </div>
