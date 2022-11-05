@@ -61,7 +61,7 @@ function Mint({
     if (!address || !contract) return;
     const quantity = 1;
     contract.interceptor.overrideNextTransaction(() => ({
-      gasLimit: 8000000,
+      gasLimit: 800000,
     }));
     contract
       .claimTo(address, quantity)
@@ -70,14 +70,13 @@ function Mint({
         const claimedTokenId = tx[0].id; // the id of the NFT claimed
         const claimedNFT = await tx[0].data(); // (optional) get the claimed NFT metadata
         console.log(claimedNFT);
+        toast.success("NFT Minted!");
       })
       .catch((err) => {
-        // toast.dismiss();
+        toast.dismiss();
         toast.error("Error minting NFT");
-        console.log(err);
       })
       .finally(() => {
-        toast.dismiss();
         setLoading(false);
       });
   };
