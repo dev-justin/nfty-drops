@@ -4,7 +4,14 @@ import Link from "next/link";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { useState } from "react";
 
-function MobileNavLinks({ collections }) {
+interface collection {
+  title: string;
+  slug: {
+    current: string;
+  };
+}
+
+function MobileNavLinks({ collections }: { collections: collection[] }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="md:hidden">
