@@ -13,12 +13,12 @@ function Header() {
             className="text-white items-center gap-2 inline-flex group"
           >
             <BsDropletHalf className="text-3xl group-hover:text-blue-400 transition-all duration-300 ease-out" />
-            <span className="text-2xl font-bold group-hover:text-white/90 transition-all duration-300 ease-out">
+            <span className="text-2xl font-bold group-hover:text-white/90 transition-all duration-300 ease-out hidden sm:inline-block">
               NFTY Drops
             </span>
           </Link>
         </div>
-        <div className="flex items-center gap-8">
+        <div className="flex items-center sm:gap-8 gap-4">
           <NavLinks />
           <NavConnect />
         </div>

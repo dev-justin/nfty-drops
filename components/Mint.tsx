@@ -5,6 +5,7 @@ import { useContract } from "@thirdweb-dev/react";
 import { useEffect, useState } from "react";
 import { useSpring, animated } from "react-spring";
 import { useAddress } from "@thirdweb-dev/react";
+import toast, { Toaster } from "react-hot-toast";
 
 const calc = (x: number, y: number) => [
   -(y - window.innerHeight / 2) / 20,
@@ -55,11 +56,12 @@ function Mint({
   }, [contract]);
 
   const mintNft = async () => {
+    toast.loading("Minting NFT...");
     setLoading(true);
     if (!address || !contract) return;
     const quantity = 1;
     contract.interceptor.overrideNextTransaction(() => ({
-      gasLimit: 3000000,
+      gasLimit: 8000000,
     }));
     contract
       .claimTo(address, quantity)
@@ -70,15 +72,19 @@ function Mint({
         console.log(claimedNFT);
       })
       .catch((err) => {
+        // toast.dismiss();
+        toast.error("Error minting NFT");
         console.log(err);
       })
       .finally(() => {
+        toast.dismiss();
         setLoading(false);
       });
   };
 
   return (
     <div className="flex flex-col justify-center items-center pt-12">
+      <Toaster />
       <animated.div
         onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
         onMouseLeave={() => set({ xys: [0, 0, 1] })}

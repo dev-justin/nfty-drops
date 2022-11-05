@@ -19,7 +19,7 @@ const getCollections = async () => {
 const Hero = asyncComponent(async () => {
   const collections = await getCollections();
   return (
-    <div className="flex py-12 gap-12 px-8 flex-col-reverse">
+    <div className="flex py-8 gap-12 px-8 flex-col-reverse">
       <div className="flex flex-col items-center gap-8 flex-1">
         <h1 className="text-4xl md:text-5xl lg:text-6xl bg-gradient-to-l from-blue-400 to-green-300 bg-clip-text text-transparent text-center py-2">
           Grow your digital art collection.
@@ -42,28 +42,31 @@ const Hero = asyncComponent(async () => {
         </div>
       </div>
       <div className="flex-1 flex justify-center items-center">
-        <div className="flex-1 flex justify-center items-center">
-          <Image
-            src="/assets/images/FeaturedA3.avif"
-            width={200}
-            height={200}
-            alt="Image showing artwork"
-            className="object-cover aspect-[3/5] object-center rounded-lg shadow-md scale-75 opacity-70 blur-sm"
-          />
-          <Image
-            src="/assets/images/FeaturedA1.avif"
-            width={200}
-            height={200}
-            alt="Image showing artwork"
-            className="object-cover aspect-[3/5] object-center rounded-lg shadow-md"
-          />
-          <Image
-            src="/assets/images/FeaturedA2.avif"
-            width={200}
-            height={200}
-            alt="Image showing artwork"
-            className="object-cover aspect-[3/5] object-center rounded-lg shadow-md scale-75 opacity-70 blur-sm"
-          />
+        <div className="flex-1 flex justify-center items-center w-full overflow-hidden">
+          <div className="relative md:h-[300px] md:w-[200px] h-[150px] w-[100px]">
+            <Image
+              src="/assets/images/FeaturedA3.avif"
+              fill={true}
+              alt="Image showing artwork"
+              className="object-cover aspect-[3/5] object-center rounded-lg shadow-md scale-75 opacity-70 blur-sm"
+            />
+          </div>
+          <div className="relative md:h-[300px] md:w-[200px] h-[150px] w-[100px]">
+            <Image
+              src="/assets/images/FeaturedA1.avif"
+              fill={true}
+              alt="Image showing artwork"
+              className="object-cover aspect-[3/5] object-center rounded-lg shadow-md"
+            />
+          </div>
+          <div className="relative md:h-[300px] md:w-[200px] h-[150px] w-[100px]">
+            <Image
+              src="/assets/images/FeaturedA2.avif"
+              fill={true}
+              alt="Image showing artwork"
+              className="object-cover aspect-[3/5] object-center rounded-lg shadow-md scale-75 opacity-70 blur-sm"
+            />
+          </div>
         </div>
       </div>
     </div>

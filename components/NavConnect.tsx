@@ -13,14 +13,17 @@ function NavConnect() {
     >
       {address ? (
         <div className="flex items-center gap-2">
-          <span className="text-sm">Logout:</span>
-          <span className="text-sm">
+          <span className="text-sm">Logout</span>
+          <span className="text-sm hidden sm:inline-block">
             {address.substring(0, 5)}...
             {address.substring(address.length - 4)}
           </span>
         </div>
       ) : (
-        "Connect Wallet"
+        <>
+          <span className="hidden sm:block">Connect Wallet</span>
+          <span className="sm:hidden">Connect</span>
+        </>
       )}
     </button>
   );
