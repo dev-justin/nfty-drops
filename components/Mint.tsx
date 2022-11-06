@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useSpring, animated } from "react-spring";
 import { useAddress } from "@thirdweb-dev/react";
 import toast, { Toaster } from "react-hot-toast";
+import RevealModal from "./RevealModal";
 
 const calc = (x: number, y: number) => [
   -(y - window.innerHeight / 2) / 20,
@@ -36,6 +37,7 @@ function Mint({
   const [claimed, setClaimed] = useState<number>();
   const [price, setPrice] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
+  const [nftImageURL, setNftImageURL] = useState<string>();
 
   const getSupply = async () => {
     await Promise.all([
@@ -70,6 +72,10 @@ function Mint({
         const claimedTokenId = tx[0].id; // the id of the NFT claimed
         const claimedNFT = await tx[0].data(); // (optional) get the claimed NFT metadata
         console.log(claimedNFT);
+        if (claimedNFT.metadata.image) {
+          setNftImageURL(claimedNFT.metadata.image);
+        }
+        toast.dismiss();
         toast.success("NFT Minted!");
       })
       .catch((err) => {
@@ -129,6 +135,7 @@ function Mint({
           </div>
         </div>
       </animated.div>
+      {nftImageURL && <RevealModal nftImage={nftImageURL} />}
     </div>
   );
 }

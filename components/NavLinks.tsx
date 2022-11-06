@@ -17,7 +17,6 @@ const getCollections = async () => {
 
 const NavLinks = asyncComponent(async () => {
   const collections = await getCollections();
-
   return (
     <>
       {/* Desktop */}
